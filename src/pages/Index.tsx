@@ -1,5 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Icon from "@/components/ui/icon";
+
+const SLIDES = [
+  {
+    img: "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/ed053305-4df3-455a-941d-be8a49b8f5b5.jpg",
+    tag: "Матчевый режим",
+    title: "Финальный розыгрыш",
+    desc: "Критический момент финала сезона: счёт 24:24, подача решает всё. Каждый пиксель экрана ощущается как живой матч.",
+  },
+  {
+    img: "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/dfb6de38-0ea6-4833-8a29-52dbc8d00b31.jpg",
+    tag: "Арены",
+    title: "Арена «Москва Ночная»",
+    desc: "Флагманская арена с 12 000 зрителей, динамичным освещением и атмосферным звуком стадиона в реальном времени.",
+  },
+  {
+    img: "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/4d7a959a-336f-478e-94b5-c9a97174512b.jpg",
+    tag: "Персонаж",
+    title: "Кастомизация игрока",
+    desc: "Более 200 предметов экипировки, уникальные анимации победы и система рейтинга, которая отражает твой реальный уровень игры.",
+  },
+];
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/ed053305-4df3-455a-941d-be8a49b8f5b5.jpg";
 const CHAR_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/4d7a959a-336f-478e-94b5-c9a97174512b.jpg";
@@ -34,6 +55,18 @@ function AnimSection({ children, className = "" }: { children: React.ReactNode; 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [slide, setSlide] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  const goTo = useCallback((idx: number) => {
+    if (animating) return;
+    setAnimating(true);
+    setSlide(idx);
+    setTimeout(() => setAnimating(false), 500);
+  }, [animating]);
+
+  const prev = () => goTo((slide - 1 + SLIDES.length) % SLIDES.length);
+  const next = () => goTo((slide + 1) % SLIDES.length);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -280,83 +313,128 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <AnimSection className="text-center mb-16">
             <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-6">
-              <Icon name="MessageSquare" size={14} className="text-blue-400" />
-              <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Сообщество</span>
+              <Icon name="Images" size={14} className="text-blue-400" />
+              <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Скриншоты</span>
             </div>
             <h2 className="font-display font-bold text-[clamp(2.5rem,5vw,4.5rem)] uppercase leading-tight">
-              <span className="text-white">ВАШЕ СЛОВО — НАШ</span>
+              <span className="text-white">ЗАГЛЯНИ В МИР</span>
               <br />
-              <span className="text-gradient">СЛЕДУЮЩИЙ АПДЕЙТ</span>
+              <span className="text-gradient">VOLLEYHUB</span>
             </h2>
             <p className="font-body text-white/50 text-lg mt-4 max-w-lg mx-auto">
-              Давайте обсудим игру! Каждый фидбэк помогает нам сделать VolleyHub лучше.
+              Каждый кадр — реальный момент из игры. Живые скриншоты из беты.
             </p>
           </AnimSection>
 
-          <div className="grid lg:grid-cols-3 gap-6 mb-12">
-            <AnimSection className="lg:col-span-2">
-              <div className="relative rounded-2xl overflow-hidden h-80 border-glow group">
-                <img src={CHAR_IMG} alt="Community Character" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/80 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6">
-                  <h3 className="font-display font-bold text-2xl text-white uppercase">Играй и общайся</h3>
-                  <p className="font-body text-white/60 text-sm mt-1">Живое сообщество игроков</p>
-                </div>
-              </div>
-            </AnimSection>
+          {/* CAROUSEL */}
+          <AnimSection>
+            <div className="relative">
+              {/* Main slide */}
+              <div className="relative rounded-3xl overflow-hidden border-glow" style={{ height: "clamp(320px, 55vw, 620px)" }}>
+                {SLIDES.map((s, i) => (
+                  <div
+                    key={i}
+                    className="absolute inset-0 transition-all duration-500"
+                    style={{ opacity: i === slide ? 1 : 0, transform: i === slide ? "scale(1)" : "scale(1.03)", pointerEvents: i === slide ? "auto" : "none" }}
+                  >
+                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050a14] via-[#050a14]/20 to-transparent" />
+                  </div>
+                ))}
 
-            <AnimSection>
-              <div className="flex flex-col gap-6 h-80">
-                <div className="glass rounded-2xl p-6 flex-1 flex flex-col justify-between border-glow">
-                  <div className="font-display font-bold text-5xl text-gradient">10K+</div>
-                  <div>
-                    <div className="font-display font-semibold text-white text-lg">Активных игроков</div>
-                    <div className="font-body text-white/40 text-sm mt-1">в нашем сообществе</div>
-                  </div>
+                {/* Counter */}
+                <div className="absolute top-5 right-5 glass px-3 py-1.5 rounded-full flex items-center gap-2">
+                  <span className="font-display font-bold text-white text-sm">{slide + 1}</span>
+                  <span className="text-white/30 text-sm">/</span>
+                  <span className="font-body text-white/40 text-sm">{SLIDES.length}</span>
                 </div>
-                <div className="glass-blue rounded-2xl p-6 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
-                    <Icon name="Send" size={20} className="text-blue-400" />
-                  </div>
-                  <div>
-                    <div className="font-display font-semibold text-white">Telegram</div>
-                    <div className="font-body text-white/40 text-xs">Присоединиться</div>
-                  </div>
-                </div>
-              </div>
-            </AnimSection>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { icon: "Mic", title: "Форум игроков", desc: "Обсуждай тактику, делись опытом, находи команду", badge: "Популярное" },
-              { icon: "Bell", title: "Анонсы апдейтов", desc: "Первым узнавай о новых фичах и патчах", badge: "Новое" },
-              { icon: "Award", title: "Турниры", desc: "Участвуй в официальных и сезонных турнирах", badge: "Скоро" },
-            ].map((card) => (
-              <AnimSection key={card.title}>
-                <div className="glass rounded-2xl p-6 h-full hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 border border-white/5">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center">
-                      <Icon name={card.icon} size={18} className="text-blue-400" fallback="Star" />
+                {/* Tag */}
+                <div className="absolute top-5 left-5">
+                  <span className="glass-blue px-3 py-1.5 rounded-full font-body text-xs text-blue-300 tracking-widest uppercase">
+                    {SLIDES[slide].tag}
+                  </span>
+                </div>
+
+                {/* Bottom info */}
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="flex items-end justify-between gap-6">
+                    <div className="flex-1">
+                      <h3
+                        key={`title-${slide}`}
+                        className="font-display font-bold text-[clamp(1.5rem,4vw,3rem)] text-white uppercase leading-tight mb-2"
+                        style={{ animation: "fade-up 0.4s ease-out forwards" }}
+                      >
+                        {SLIDES[slide].title}
+                      </h3>
+                      <p
+                        key={`desc-${slide}`}
+                        className="font-body text-white/60 text-base leading-relaxed max-w-lg"
+                        style={{ animation: "fade-up 0.5s ease-out forwards" }}
+                      >
+                        {SLIDES[slide].desc}
+                      </p>
                     </div>
-                    <span className="font-body text-xs text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">{card.badge}</span>
+
+                    {/* Nav arrows */}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <button
+                        onClick={prev}
+                        className="w-12 h-12 glass rounded-full flex items-center justify-center hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 group"
+                      >
+                        <Icon name="ChevronLeft" size={20} className="text-white/70 group-hover:text-white" />
+                      </button>
+                      <button
+                        onClick={next}
+                        className="w-12 h-12 btn-primary-vh rounded-full flex items-center justify-center transition-all duration-200 group"
+                      >
+                        <Icon name="ChevronRight" size={20} className="text-white" />
+                      </button>
+                    </div>
                   </div>
-                  <h3 className="font-display font-semibold text-white text-lg mb-2">{card.title}</h3>
-                  <p className="font-body text-white/50 text-sm leading-relaxed">{card.desc}</p>
                 </div>
-              </AnimSection>
-            ))}
-          </div>
+              </div>
+
+              {/* Thumbnails */}
+              <div className="flex gap-3 mt-4">
+                {SLIDES.map((s, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    className={`relative rounded-xl overflow-hidden flex-1 transition-all duration-300 ${i === slide ? "ring-2 ring-blue-500 ring-offset-2 ring-offset-[#050a14]" : "opacity-50 hover:opacity-80"}`}
+                    style={{ height: "80px" }}
+                  >
+                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                    <div className={`absolute inset-0 transition-all duration-300 ${i === slide ? "bg-transparent" : "bg-[#050a14]/40"}`} />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <span className="font-display text-[10px] text-white/80 uppercase tracking-wider line-clamp-1">{s.title}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Dot indicators */}
+              <div className="flex justify-center gap-2 mt-5">
+                {SLIDES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    className={`transition-all duration-300 rounded-full ${i === slide ? "w-8 h-2 bg-blue-500" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </AnimSection>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="py-32 relative overflow-hidden">
+      <section id="about" className="py-24 relative overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-6">
-          <AnimSection className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-6">
+          <AnimSection className="mb-12">
+            <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-4">
               <Icon name="Users" size={14} className="text-blue-400" />
               <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Команда</span>
             </div>
@@ -365,56 +443,83 @@ export default function Index() {
             </h2>
           </AnimSection>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimSection>
+          <AnimSection>
+            <div className="grid lg:grid-cols-[1fr_480px] gap-10 items-stretch">
+              {/* Text side */}
+              <div className="flex flex-col justify-center">
+                <h3 className="font-display font-bold text-5xl text-white uppercase mb-1">
+                  Никита Петров
+                </h3>
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="font-body text-blue-400 text-sm">Game Director</span>
+                  <span className="text-white/20">·</span>
+                  <span className="font-body text-white/50 text-sm">Singular Games</span>
+                </div>
+
+                <div className="glass rounded-2xl p-5 mb-5 border-l-2 border-blue-500">
+                  <p className="font-body text-white/80 leading-relaxed text-base italic">
+                    "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей,
+                    а не разделять. Каждое обновление — это ваш голос."
+                  </p>
+                </div>
+
+                <p className="font-body text-white/50 leading-relaxed mb-6 text-sm">
+                  <strong className="text-white">Singular Games</strong> — независимая команда разработчиков-студентов,
+                  влюблённых в волейбол и игровую индустрию. Мы строим VolleyHub с нуля, опираясь на
+                  фидбэк сообщества и реальный опыт игроков.
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {["Геймдизайн", "Backend", "3D Art", "Сообщество"].map((tag) => (
+                    <span key={tag} className="glass-blue px-3 py-1.5 rounded-full font-body text-xs text-blue-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Team stats compact */}
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { val: "2023", label: "Основана" },
+                    { val: "6", label: "В команде" },
+                    { val: "v0.8", label: "Версия беты" },
+                  ].map((s) => (
+                    <div key={s.label} className="glass rounded-xl p-4 text-center">
+                      <div className="font-display font-bold text-2xl text-gradient">{s.val}</div>
+                      <div className="font-body text-xs text-white/40 mt-1">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Big photo */}
               <div className="relative">
-                <div className="relative w-72 mx-auto lg:mx-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-purple-600/30 rounded-2xl blur-xl" />
+                <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-3xl blur-2xl" />
+                <div className="relative rounded-3xl overflow-hidden border-glow h-full min-h-[480px]">
                   <img
                     src={CHAR_IMG}
                     alt="Никита Петров"
-                    className="relative rounded-2xl w-full aspect-[3/4] object-cover border-glow"
+                    className="w-full h-full object-cover object-top"
                   />
-                  <div className="absolute -bottom-4 -right-4 glass-blue rounded-xl px-4 py-3">
-                    <div className="font-display font-bold text-white text-sm">Game Director</div>
-                    <div className="font-body text-blue-300 text-xs">Singular Games</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/70 via-transparent to-transparent" />
+                  {/* Badge overlay */}
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <div className="glass-blue rounded-2xl p-4 flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xl flex-shrink-0">🏐</div>
+                      <div>
+                        <div className="font-display font-bold text-white">Singular Games</div>
+                        <div className="font-body text-blue-300/70 text-xs">Независимая студия · Москва</div>
+                      </div>
+                      <div className="ml-auto flex items-center gap-1.5">
+                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        <span className="font-body text-xs text-green-400">В разработке</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </AnimSection>
-
-            <AnimSection>
-              <h3 className="font-display font-bold text-4xl text-white uppercase mb-2">
-                Никита Петров
-              </h3>
-              <div className="inline-flex items-center gap-2 mb-6">
-                <span className="font-body text-blue-400 text-sm">Game Director</span>
-                <span className="text-white/20">·</span>
-                <span className="font-body text-white/50 text-sm">Singular Games</span>
-              </div>
-
-              <div className="glass rounded-2xl p-6 mb-6 border border-white/5">
-                <p className="font-body text-white/70 leading-relaxed text-lg italic">
-                  "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей,
-                  а не разделять. Каждое обновление — это ваш голос."
-                </p>
-              </div>
-
-              <p className="font-body text-white/50 leading-relaxed mb-6">
-                <strong className="text-white">Singular Games</strong> — независимая команда разработчиков-студентов,
-                влюблённых в волейбол и игровую индустрию. Мы строим VolleyHub с нуля, опираясь на
-                фидбэк сообщества и реальный опыт игроков.
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                {["Геймдизайн", "Backend", "3D Art", "Сообщество"].map((tag) => (
-                  <span key={tag} className="glass-blue px-4 py-2 rounded-full font-body text-sm text-blue-300">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </AnimSection>
-          </div>
+            </div>
+          </AnimSection>
         </div>
       </section>
 
