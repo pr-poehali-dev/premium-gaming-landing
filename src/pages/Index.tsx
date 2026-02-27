@@ -26,6 +26,24 @@ const HERO_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b748
 const CHAR_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/4d7a959a-336f-478e-94b5-c9a97174512b.jpg";
 const ARENA_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/dfb6de38-0ea6-4833-8a29-52dbc8d00b31.jpg";
 
+const TEAM = [
+  { name: "Никита Петров", role: "Game Director", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Lead Developer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "3D Artist", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "UI/UX Designer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Backend Engineer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Sound Designer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Level Designer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "QA Engineer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Community Manager", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Animator", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Narrative Designer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Marketing Lead", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Network Engineer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Producer", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+  { name: "Никита Петров", role: "Art Director", quote: "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей, а не разделять. Каждое обновление — это ваш голос.", tags: ["Геймдизайн", "Backend", "3D Art", "Сообщество"], img: CHAR_IMG },
+];
+
 function useIntersection(ref: React.RefObject<Element>, threshold = 0.15) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -67,6 +85,19 @@ export default function Index() {
 
   const prev = () => goTo((slide - 1 + SLIDES.length) % SLIDES.length);
   const next = () => goTo((slide + 1) % SLIDES.length);
+
+  const [teamSlide, setTeamSlide] = useState(0);
+  const [teamAnimating, setTeamAnimating] = useState(false);
+
+  const goToTeam = useCallback((idx: number) => {
+    if (teamAnimating) return;
+    setTeamAnimating(true);
+    setTeamSlide(idx);
+    setTimeout(() => setTeamAnimating(false), 400);
+  }, [teamAnimating]);
+
+  const teamPrev = () => goToTeam((teamSlide - 1 + TEAM.length) % TEAM.length);
+  const teamNext = () => goToTeam((teamSlide + 1) % TEAM.length);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -444,75 +475,119 @@ export default function Index() {
           </AnimSection>
 
           <AnimSection>
-            <div className="grid lg:grid-cols-[1fr_480px] gap-10 items-stretch">
-              {/* Text side */}
-              <div className="flex flex-col justify-center">
-                <h3 className="font-display font-bold text-5xl text-white uppercase mb-1">
-                  Никита Петров
-                </h3>
-                <div className="flex items-center gap-2 mb-6">
-                  <span className="font-body text-blue-400 text-sm">Game Director</span>
-                  <span className="text-white/20">·</span>
-                  <span className="font-body text-white/50 text-sm">Singular Games</span>
+            {/* Team stats */}
+            <div className="grid grid-cols-3 gap-3 mb-10">
+              {[
+                { val: "2023", label: "Основана" },
+                { val: "15", label: "В команде" },
+                { val: "v0.8", label: "Версия беты" },
+              ].map((s) => (
+                <div key={s.label} className="glass rounded-xl p-4 text-center">
+                  <div className="font-display font-bold text-2xl text-gradient">{s.val}</div>
+                  <div className="font-body text-xs text-white/40 mt-1">{s.label}</div>
                 </div>
+              ))}
+            </div>
 
-                <div className="glass rounded-2xl p-5 mb-5 border-l-2 border-blue-500">
-                  <p className="font-body text-white/80 leading-relaxed text-base italic">
-                    "Мы создаём VolleyHub, потому что верим: спортивные игры должны объединять людей,
-                    а не разделять. Каждое обновление — это ваш голос."
-                  </p>
-                </div>
-
-                <p className="font-body text-white/50 leading-relaxed mb-6 text-sm">
-                  <strong className="text-white">Singular Games</strong> — независимая команда разработчиков-студентов,
-                  влюблённых в волейбол и игровую индустрию. Мы строим VolleyHub с нуля, опираясь на
-                  фидбэк сообщества и реальный опыт игроков.
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {["Геймдизайн", "Backend", "3D Art", "Сообщество"].map((tag) => (
-                    <span key={tag} className="glass-blue px-3 py-1.5 rounded-full font-body text-xs text-blue-300">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Team stats compact */}
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { val: "2023", label: "Основана" },
-                    { val: "6", label: "В команде" },
-                    { val: "v0.8", label: "Версия беты" },
-                  ].map((s) => (
-                    <div key={s.label} className="glass rounded-xl p-4 text-center">
-                      <div className="font-display font-bold text-2xl text-gradient">{s.val}</div>
-                      <div className="font-body text-xs text-white/40 mt-1">{s.label}</div>
+            {/* Carousel */}
+            <div className="relative">
+              <div className="grid lg:grid-cols-[1fr_480px] gap-10 items-stretch">
+                {/* Text side */}
+                <div className="flex flex-col justify-center">
+                  <div
+                    key={`team-text-${teamSlide}`}
+                    style={{ animation: "fade-up 0.4s ease-out forwards" }}
+                  >
+                    <h3 className="font-display font-bold text-5xl text-white uppercase mb-1">
+                      {TEAM[teamSlide].name}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-6">
+                      <span className="font-body text-blue-400 text-sm">{TEAM[teamSlide].role}</span>
+                      <span className="text-white/20">·</span>
+                      <span className="font-body text-white/50 text-sm">Singular Games</span>
                     </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Big photo */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-3xl blur-2xl" />
-                <div className="relative rounded-3xl overflow-hidden border-glow h-full min-h-[480px]">
-                  <img
-                    src={CHAR_IMG}
-                    alt="Никита Петров"
-                    className="w-full h-full object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/70 via-transparent to-transparent" />
-                  {/* Badge overlay */}
-                  <div className="absolute bottom-5 left-5 right-5">
-                    <div className="glass-blue rounded-2xl p-4 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xl flex-shrink-0">🏐</div>
-                      <div>
-                        <div className="font-display font-bold text-white">Singular Games</div>
-                        <div className="font-body text-blue-300/70 text-xs">Независимая студия · Москва</div>
+                    <div className="glass rounded-2xl p-5 mb-5 border-l-2 border-blue-500">
+                      <p className="font-body text-white/80 leading-relaxed text-base italic">
+                        "{TEAM[teamSlide].quote}"
+                      </p>
+                    </div>
+
+                    <p className="font-body text-white/50 leading-relaxed mb-6 text-sm">
+                      <strong className="text-white">Singular Games</strong> — независимая команда разработчиков-студентов,
+                      влюблённых в волейбол и игровую индустрию. Мы строим VolleyHub с нуля, опираясь на
+                      фидбэк сообщества и реальный опыт игроков.
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {TEAM[teamSlide].tags.map((tag) => (
+                        <span key={tag} className="glass-blue px-3 py-1.5 rounded-full font-body text-xs text-blue-300">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Nav controls */}
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={teamPrev}
+                      className="w-12 h-12 glass rounded-full flex items-center justify-center hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 group"
+                    >
+                      <Icon name="ChevronLeft" size={20} className="text-white/70 group-hover:text-white" />
+                    </button>
+                    <button
+                      onClick={teamNext}
+                      className="w-12 h-12 btn-primary-vh rounded-full flex items-center justify-center transition-all duration-200"
+                    >
+                      <Icon name="ChevronRight" size={20} className="text-white" />
+                    </button>
+                    <span className="font-body text-white/40 text-sm ml-2">
+                      {teamSlide + 1} / {TEAM.length}
+                    </span>
+
+                    {/* Dot indicators */}
+                    <div className="flex items-center gap-1.5 ml-auto flex-wrap max-w-[200px]">
+                      {TEAM.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => goToTeam(i)}
+                          className={`transition-all duration-300 rounded-full ${i === teamSlide ? "w-6 h-2 bg-blue-500" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Big photo */}
+                <div className="relative">
+                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-3xl blur-2xl" />
+                  <div className="relative rounded-3xl overflow-hidden border-glow h-full min-h-[480px]">
+                    {TEAM.map((member, i) => (
+                      <div
+                        key={i}
+                        className="absolute inset-0 transition-all duration-400"
+                        style={{ opacity: i === teamSlide ? 1 : 0, pointerEvents: i === teamSlide ? "auto" : "none" }}
+                      >
+                        <img
+                          src={member.img}
+                          alt={member.name}
+                          className="w-full h-full object-cover object-top"
+                        />
                       </div>
-                      <div className="ml-auto flex items-center gap-1.5">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        <span className="font-body text-xs text-green-400">В разработке</span>
+                    ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-5 left-5 right-5">
+                      <div className="glass-blue rounded-2xl p-4 flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xl flex-shrink-0">🏐</div>
+                        <div>
+                          <div className="font-display font-bold text-white">Singular Games</div>
+                          <div className="font-body text-blue-300/70 text-xs">Независимая студия · Москва</div>
+                        </div>
+                        <div className="ml-auto flex items-center gap-1.5">
+                          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <span className="font-body text-xs text-green-400">В разработке</span>
+                        </div>
                       </div>
                     </div>
                   </div>
