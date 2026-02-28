@@ -101,7 +101,7 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #258cff 0%, #a855f7 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #c8cafd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -130,14 +130,15 @@
   }
 
   .btn-primary-vh {
-    background: linear-gradient(135deg, #258cff, #1a6fd4);
-    color: white;
+    background: #ffffff;
+    color: #0e106e;
     border: none;
     transition: all 0.3s ease;
   }
 
   .btn-primary-vh:hover {
-    background: linear-gradient(135deg, #3a9aff, #258cff);
+    background: #258cff;
+    color: #ffffff;
     box-shadow: 0 0 30px rgba(37, 140, 255, 0.5);
     transform: translateY(-2px);
   }
@@ -145,14 +146,16 @@
   .btn-outline-vh {
     background: transparent;
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: all 0.3s ease;
   }
 
   .btn-outline-vh:hover {
-    border-color: rgba(37, 140, 255, 0.6);
-    background: rgba(37, 140, 255, 0.1);
-    box-shadow: 0 0 20px rgba(37, 140, 255, 0.2);
+    background: #258cff;
+    color: #ffffff;
+    border-color: #258cff;
+    box-shadow: 0 0 30px rgba(37, 140, 255, 0.5);
+    transform: translateY(-2px);
   }
 
   .noise-bg::before {
