@@ -114,11 +114,12 @@ export default function Index() {
   ];
 
   const socials = [
-    { icon: "Send", label: "Telegram", href: "#" },
-    { icon: "MessageCircle", label: "Discord", href: "#" },
-    { icon: "Youtube", label: "YouTube", href: "#" },
-    { icon: "Music", label: "TikTok", href: "#" },
-    { icon: "Globe", label: "VK", href: "#" },
+    { icon: "Send", label: "Telegram", href: "#", color: "from-blue-400 to-blue-600", desc: "Новости и анонсы" },
+    { icon: "MessageCircle", label: "Discord", href: "#", color: "from-indigo-500 to-purple-600", desc: "Живое сообщество" },
+    { icon: "Youtube", label: "YouTube", href: "#", color: "from-red-500 to-red-700", desc: "Видео и стримы" },
+    { icon: "Users", label: "ВКонтакте", href: "#", color: "from-blue-500 to-blue-700", desc: "Русскоязычное комьюнити" },
+    { icon: "Music", label: "TikTok", href: "#", color: "from-pink-500 to-fuchsia-600", desc: "Короткие клипы" },
+    { icon: "Globe", label: "Сайт", href: "#", color: "from-emerald-500 to-teal-600", desc: "Официальный сайт" },
   ];
 
   return (
@@ -705,6 +706,43 @@ export default function Index() {
         </div>
       </section>
 
+      {/* SOCIALS SECTION */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-950/20 to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto relative">
+          <AnimSection>
+            <div className="text-center mb-12">
+              <h2 className="font-display font-black text-4xl md:text-5xl text-white uppercase tracking-tight mb-3">
+                Присоединяйся к<br />
+                <span className="text-gradient">сообществу</span>
+              </h2>
+              <p className="font-body text-white/50 text-base max-w-sm mx-auto">
+                Будь в курсе всех обновлений и общайся с другими игроками
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  className="group glass rounded-2xl p-5 flex items-center gap-4 hover:border-white/20 hover:scale-[1.02] transition-all duration-300"
+                >
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon name={s.icon} size={22} className="text-white" fallback="Globe" />
+                  </div>
+                  <div>
+                    <div className="font-display font-bold text-white text-base">{s.label}</div>
+                    <div className="font-body text-white/40 text-xs mt-0.5">{s.desc}</div>
+                  </div>
+                  <Icon name="ArrowRight" size={16} className="text-white/20 group-hover:text-white/60 ml-auto transition-colors duration-200" />
+                </a>
+              ))}
+            </div>
+          </AnimSection>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="border-t border-white/5 py-16">
         <div className="max-w-7xl mx-auto px-6">
@@ -716,17 +754,9 @@ export default function Index() {
                   VOLLEY<span className="text-gradient">HUB</span><span className="text-white/30">.FUN</span>
                 </span>
               </div>
-              <p className="font-body text-white/40 text-sm leading-relaxed max-w-xs mb-6">
+              <p className="font-body text-white/40 text-sm leading-relaxed max-w-xs">
                 Многопользовательская волейбольная игра от независимой студии Singular Games.
               </p>
-              <div className="flex items-center gap-4">
-                {socials.map((s) => (
-                  <a key={s.label} href={s.href} title={s.label}
-                    className="w-9 h-9 glass rounded-lg flex items-center justify-center text-white/40 hover:text-blue-400 hover:border-blue-500/30 transition-all duration-200">
-                    <Icon name={s.icon} size={15} fallback="Globe" />
-                  </a>
-                ))}
-              </div>
             </div>
 
             {[
