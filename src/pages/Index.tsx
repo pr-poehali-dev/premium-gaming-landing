@@ -200,78 +200,72 @@ export default function Index() {
       </header>
 
       {/* HERO */}
-      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none flex items-center justify-center"
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
           style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
-          <span className="font-display font-black text-[22vw] leading-none text-white/[0.03] whitespace-nowrap tracking-[0.15em] uppercase">
+          <span className="font-display font-black text-[15vw] leading-none text-white/[0.04] whitespace-nowrap tracking-[0.2em] uppercase">
             VOLLEYHUB
           </span>
         </div>
 
-        <div className="absolute right-0 bottom-0 md:right-[5%] md:bottom-0 w-[50vw] max-w-[600px] pointer-events-none select-none z-[2]"
-          style={{ transform: `translateY(${scrollY * 0.1}px)` }}>
-          <img src="https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/2c9d073d-c9b2-4623-9b14-974ac00b9568.jpg" alt="Volleyball player"
-            className="w-full h-auto object-contain mix-blend-lighten opacity-80" />
+        <div className="absolute inset-0 flex items-end justify-center pointer-events-none select-none z-[2]"
+          style={{ transform: `translateY(${scrollY * 0.15}px)` }}>
+          <img src="https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/2fbfbf91-38fe-45de-b6ae-f251845fd8f5.jpg" alt="Volleyball player"
+            className="w-[45vw] max-w-[550px] h-auto object-contain mix-blend-lighten opacity-60" />
         </div>
 
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-8 animate-fade-up">
-              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-              <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Открытая бета</span>
+        <div className="relative z-10 w-full px-4 pt-24 pb-16 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-8 animate-fade-up">
+            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+            <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Открытая бета</span>
+          </div>
+
+          <h1 className="font-display font-bold leading-[0.85] mb-6 animate-fade-up delay-200 uppercase w-full">
+            <span className="block text-[clamp(1.2rem,2.5vw,2rem)] text-white/70 tracking-[0.25em] mb-3">МЫ ВЕРИМ, ЧТО</span>
+            <span className="block text-[clamp(2.5rem,10vw,9rem)] tracking-tight font-black" style={{
+              background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>СИЛА ИГРЫ</span>
+            <span className="block text-[clamp(2.5rem,10vw,9rem)] tracking-tight font-black" style={{
+              background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>В СООБЩЕСТВЕ</span>
+          </h1>
+
+          <p className="font-body text-white/60 text-lg leading-relaxed mb-10 max-w-lg animate-fade-up delay-400">
+            Каждый игрок — это история. Каждый матч — это шанс стать легендой.
+            Присоединяйся к тысячам волейболистов по всему миру.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4 animate-fade-up delay-500">
+            <button className="btn-primary-vh px-8 py-3.5 rounded-full font-display font-semibold text-base tracking-wide flex items-center gap-2">
+              <Icon name="Play" size={18} />
+              Отслеживать
+            </button>
+            <button className="btn-outline-vh px-8 py-3.5 rounded-full font-display font-semibold text-base tracking-wide flex items-center gap-2">
+              <Icon name="MessageCircle" size={18} />
+              Связаться с нами
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-14 animate-fade-up delay-600">
+            <div className="relative">
+              <span className="w-3 h-3 rounded-full bg-green-400 block animate-pulse-slow" />
+              <span className="absolute inset-0 w-3 h-3 rounded-full bg-green-400/50 animate-ping" />
             </div>
-
-            <h1 className="font-display font-bold leading-[0.9] mb-6 animate-fade-up delay-200 uppercase">
-              <span className="block text-[clamp(1.5rem,3.5vw,2.5rem)] text-white/70 tracking-widest mb-2">МЫ ВЕРИМ, ЧТО</span>
-              <span className="block text-[clamp(3rem,9vw,8rem)] tracking-tight font-black" style={{
-                background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>СИЛА ИГРЫ</span>
-              <span className="block text-[clamp(3rem,9vw,8rem)] tracking-tight font-black" style={{
-                background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>В СООБЩЕСТВЕ</span>
-            </h1>
-
-            <p className="font-body text-white/60 text-lg leading-relaxed mb-10 max-w-lg animate-fade-up delay-400">
-              Каждый игрок — это история. Каждый матч — это шанс стать легендой.
-              Присоединяйся к тысячам волейболистов по всему миру.
-            </p>
-
-            <div className="flex flex-wrap gap-4 animate-fade-up delay-500">
-              <button className="btn-primary-vh px-8 py-3.5 rounded-full font-display font-semibold text-base tracking-wide flex items-center gap-2">
-                <Icon name="Play" size={18} />
-                Отслеживать
-              </button>
-              <button className="btn-outline-vh px-8 py-3.5 rounded-full font-display font-semibold text-base tracking-wide flex items-center gap-2">
-                <Icon name="MessageCircle" size={18} />
-                Связаться с нами
-              </button>
-            </div>
-
-            <div className="flex items-center gap-4 mt-16 animate-fade-up delay-600">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <span className="w-3 h-3 rounded-full bg-green-400 block animate-pulse-slow" />
-                  <span className="absolute inset-0 w-3 h-3 rounded-full bg-green-400/50 animate-ping" />
-                </div>
-                <div>
-                  <span className="font-display font-black text-3xl text-white">1,247</span>
-                  <span className="font-body text-sm text-white/50 ml-2">подписчиков на рассылку</span>
-                </div>
-              </div>
-            </div>
+            <span className="font-display font-black text-3xl text-white">1,247</span>
+            <span className="font-body text-sm text-white/50">подписчиков на рассылку</span>
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float z-10">
           <span className="font-body text-xs text-white/30 tracking-widest uppercase">Scroll</span>
           <Icon name="ChevronDown" size={20} className="text-white/30" />
         </div>
