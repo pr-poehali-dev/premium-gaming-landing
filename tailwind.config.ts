@@ -18,8 +18,8 @@ export default {
 			}
 		},
 		fontFamily: {
-				display: ['Oswald', 'sans-serif'],
-				body: ['Golos Text', 'sans-serif'],
+				display: ['Montserrat', 'sans-serif'],
+				body: ['Montserrat', 'sans-serif'],
 			},
 		extend: {
 			colors: {

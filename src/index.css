@@ -63,7 +63,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Golos Text", sans-serif;
+    font-family: "Montserrat", sans-serif;
     overflow-x: hidden;
   }
 
@@ -73,17 +73,17 @@
   h4,
   h5,
   h6 {
-    font-family: "Oswald", sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: "Oswald", sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 
   .font-body {
-    font-family: "Golos Text", sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 
   .glass {
@@ -119,7 +119,7 @@
   }
 
   .bg-gradient-vh {
-    background: linear-gradient(135deg, #0a0f1e 0%, #0d0b1f 50%, #050a14 100%);
+    background: linear-gradient(180deg, #000a25 0%, #0e106e 100%);
   }
 
   .border-glow {
@@ -264,5 +264,57 @@
 
   .opacity-0-init {
     opacity: 0;
+  }
+
+  @keyframes liquid-shift {
+    0% {
+      transform: translate(0%, 0%) scale(1);
+    }
+    25% {
+      transform: translate(5%, -3%) scale(1.05);
+    }
+    50% {
+      transform: translate(-3%, 5%) scale(0.97);
+    }
+    75% {
+      transform: translate(-5%, -2%) scale(1.03);
+    }
+    100% {
+      transform: translate(0%, 0%) scale(1);
+    }
+  }
+
+  @keyframes liquid-shift-2 {
+    0% {
+      transform: translate(0%, 0%) scale(1.02);
+    }
+    25% {
+      transform: translate(-4%, 4%) scale(0.96);
+    }
+    50% {
+      transform: translate(4%, -4%) scale(1.04);
+    }
+    75% {
+      transform: translate(3%, 3%) scale(0.98);
+    }
+    100% {
+      transform: translate(0%, 0%) scale(1.02);
+    }
+  }
+
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.15);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 2.5s ease-in-out infinite;
   }
 }

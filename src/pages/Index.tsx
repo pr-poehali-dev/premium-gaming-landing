@@ -73,6 +73,7 @@ function AnimSection({ children, className = "" }: { children: React.ReactNode; 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const [slide, setSlide] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -100,7 +101,10 @@ export default function Index() {
   const teamNext = () => goToTeam((teamSlide + 1) % TEAM.length);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
+    const handler = () => {
+      setScrolled(window.scrollY > 40);
+      setScrollY(window.scrollY);
+    };
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -119,11 +123,18 @@ export default function Index() {
     { icon: "Youtube", label: "YouTube", href: "#", color: "from-red-500 to-red-700", desc: "Видео и стримы" },
     { icon: "Users", label: "ВКонтакте", href: "#", color: "from-blue-500 to-blue-700", desc: "Русскоязычное комьюнити" },
     { icon: "Music", label: "TikTok", href: "#", color: "from-pink-500 to-fuchsia-600", desc: "Короткие клипы" },
-    { icon: "Globe", label: "Сайт", href: "#", color: "from-emerald-500 to-teal-600", desc: "Официальный сайт" },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-vh text-white overflow-x-hidden">
+
+      {/* LIQUID GRADIENT OVERLAY */}
+      <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden" style={{ clipPath: 'inset(0 0 0 0)' }}>
+        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] opacity-[0.07]"
+          style={{ animation: 'liquid-shift 15s ease-in-out infinite', background: 'radial-gradient(ellipse at 30% 50%, #4F46E5, transparent 60%), radial-gradient(ellipse at 70% 20%, #7C3AED, transparent 50%), radial-gradient(ellipse at 50% 80%, #2563EB, transparent 60%)' }} />
+        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] opacity-[0.05]"
+          style={{ animation: 'liquid-shift-2 20s ease-in-out infinite', background: 'radial-gradient(ellipse at 60% 40%, #818CF8, transparent 50%), radial-gradient(ellipse at 30% 70%, #6366F1, transparent 55%)' }} />
+      </div>
 
       {/* HEADER */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass border-b border-white/5 py-3" : "py-5 bg-transparent"}`}>
@@ -190,33 +201,43 @@ export default function Index() {
 
       {/* HERO */}
       <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="VolleyHub Hero" className="w-full h-full object-cover object-center opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050a14] via-[#050a14]/70 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050a14] via-transparent to-transparent" />
-        </div>
-
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <span className="font-display font-bold text-[18vw] leading-none text-white/[0.03] select-none whitespace-nowrap tracking-widest">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none flex items-center justify-center"
+          style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
+          <span className="font-display font-black text-[22vw] leading-none text-white/[0.03] whitespace-nowrap tracking-[0.15em] uppercase">
             VOLLEYHUB
           </span>
+        </div>
+
+        <div className="absolute right-0 bottom-0 md:right-[5%] md:bottom-0 w-[50vw] max-w-[600px] pointer-events-none select-none z-[2]"
+          style={{ transform: `translateY(${scrollY * 0.1}px)` }}>
+          <img src="https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/2c9d073d-c9b2-4623-9b14-974ac00b9568.jpg" alt="Volleyball player"
+            className="w-full h-auto object-contain mix-blend-lighten opacity-80" />
         </div>
 
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 glass-blue px-4 py-2 rounded-full mb-8 animate-fade-up">
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
               <span className="font-body text-xs text-blue-300 tracking-widest uppercase">Открытая бета</span>
             </div>
 
-            <h1 className="font-display font-bold leading-[0.9] mb-6 animate-fade-up delay-200">
-              <span className="block text-[clamp(3rem,8vw,7rem)] text-white uppercase tracking-tight">МЫ ВЕРИМ,</span>
-              <span className="block text-[clamp(3rem,8vw,7rem)] text-white uppercase tracking-tight">ЧТО СИЛА</span>
-              <span className="block text-[clamp(3rem,8vw,7rem)] uppercase tracking-tight text-gradient">ИГРЫ В</span>
-              <span className="block text-[clamp(3rem,8vw,7rem)] text-white uppercase tracking-tight">СООБЩЕСТВЕ</span>
+            <h1 className="font-display font-bold leading-[0.9] mb-6 animate-fade-up delay-200 uppercase">
+              <span className="block text-[clamp(1.5rem,3.5vw,2.5rem)] text-white/70 tracking-widest mb-2">МЫ ВЕРИМ, ЧТО</span>
+              <span className="block text-[clamp(3rem,9vw,8rem)] tracking-tight font-black" style={{
+                background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>СИЛА ИГРЫ</span>
+              <span className="block text-[clamp(3rem,9vw,8rem)] tracking-tight font-black" style={{
+                background: 'linear-gradient(180deg, #FFFFFF 0%, #C8CAFD 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>В СООБЩЕСТВЕ</span>
             </h1>
 
             <p className="font-body text-white/60 text-lg leading-relaxed mb-10 max-w-lg animate-fade-up delay-400">
@@ -235,17 +256,17 @@ export default function Index() {
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-8 mt-16 animate-fade-up delay-600">
-              {[
-                { val: "10K+", label: "Игроков" },
-                { val: "500+", label: "Матчей в день" },
-                { val: "4.9★", label: "Рейтинг" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="font-display font-bold text-3xl text-white">{stat.val}</div>
-                  <div className="font-body text-xs text-white/40 uppercase tracking-widest mt-1">{stat.label}</div>
+            <div className="flex items-center gap-4 mt-16 animate-fade-up delay-600">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <span className="w-3 h-3 rounded-full bg-green-400 block animate-pulse-slow" />
+                  <span className="absolute inset-0 w-3 h-3 rounded-full bg-green-400/50 animate-ping" />
                 </div>
-              ))}
+                <div>
+                  <span className="font-display font-black text-3xl text-white">1,247</span>
+                  <span className="font-body text-sm text-white/50 ml-2">подписчиков на рассылку</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -269,7 +290,7 @@ export default function Index() {
       <section id="description" className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
           <img src={ARENA_IMG} alt="Arena" className="w-full h-full object-cover opacity-15" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050a14] via-transparent to-[#050a14]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000A25] via-transparent to-[#000A25]" />
         </div>
         <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px] -translate-y-1/2 pointer-events-none" />
 
@@ -317,7 +338,7 @@ export default function Index() {
             <AnimSection className="relative">
               <div className="relative rounded-2xl overflow-hidden border-glow">
                 <img src={ARENA_IMG} alt="Gameplay" className="w-full aspect-[4/3] object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000A25]/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="glass rounded-xl p-4">
                     <div className="flex items-center gap-3">
@@ -370,7 +391,7 @@ export default function Index() {
                     style={{ opacity: i === slide ? 1 : 0, transform: i === slide ? "scale(1)" : "scale(1.03)", pointerEvents: i === slide ? "auto" : "none" }}
                   >
                     <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050a14] via-[#050a14]/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000A25] via-[#000A25]/20 to-transparent" />
                   </div>
                 ))}
 
@@ -433,11 +454,11 @@ export default function Index() {
                   <button
                     key={i}
                     onClick={() => goTo(i)}
-                    className={`relative rounded-xl overflow-hidden flex-1 transition-all duration-300 ${i === slide ? "ring-2 ring-blue-500 ring-offset-2 ring-offset-[#050a14]" : "opacity-50 hover:opacity-80"}`}
+                    className={`relative rounded-xl overflow-hidden flex-1 transition-all duration-300 ${i === slide ? "ring-2 ring-blue-500 ring-offset-2 ring-offset-[#000A25]" : "opacity-50 hover:opacity-80"}`}
                     style={{ height: "80px" }}
                   >
                     <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
-                    <div className={`absolute inset-0 transition-all duration-300 ${i === slide ? "bg-transparent" : "bg-[#050a14]/40"}`} />
+                    <div className={`absolute inset-0 transition-all duration-300 ${i === slide ? "bg-transparent" : "bg-[#000A25]/40"}`} />
                     <div className="absolute bottom-2 left-2 right-2">
                       <span className="font-display text-[10px] text-white/80 uppercase tracking-wider line-clamp-1">{s.title}</span>
                     </div>
@@ -577,7 +598,7 @@ export default function Index() {
                         />
                       </div>
                     ))}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000A25]/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-5 left-5 right-5">
                       <div className="glass-blue rounded-2xl p-4 flex items-center gap-4">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xl flex-shrink-0">🏐</div>
@@ -721,21 +742,20 @@ export default function Index() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 justify-items-center">
               {socials.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
-                  className="group glass rounded-2xl p-5 flex items-center gap-4 hover:border-white/20 hover:scale-[1.02] transition-all duration-300"
+                  className="group glass rounded-2xl p-6 flex flex-col items-center justify-center gap-4 hover:border-white/20 hover:scale-105 transition-all duration-300 aspect-square w-full max-w-[200px]"
                 >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon name={s.icon} size={22} className="text-white" fallback="Globe" />
+                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon name={s.icon} size={40} className="text-white" fallback="Globe" />
                   </div>
-                  <div>
+                  <div className="text-center">
                     <div className="font-display font-bold text-white text-base">{s.label}</div>
-                    <div className="font-body text-white/40 text-xs mt-0.5">{s.desc}</div>
+                    <div className="font-body text-white/40 text-xs mt-1">{s.desc}</div>
                   </div>
-                  <Icon name="ArrowRight" size={16} className="text-white/20 group-hover:text-white/60 ml-auto transition-colors duration-200" />
                 </a>
               ))}
             </div>
@@ -744,7 +764,7 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/5 py-16">
+      <footer className="border-t border-white/5 py-16 relative z-[5] bg-[#0E106E]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-5 gap-12 mb-12">
             <div className="md:col-span-2">
