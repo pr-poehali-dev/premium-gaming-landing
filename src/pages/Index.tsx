@@ -20,6 +20,18 @@ const SLIDES = [
     title: "Кастомизация игрока",
     desc: "Более 200 предметов экипировки, уникальные анимации победы и система рейтинга, которая отражает твой реальный уровень игры.",
   },
+  {
+    img: "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/de997dd5-b2ef-4a13-aeb6-58c0a5c4cfa8.jpg",
+    tag: "Командная игра",
+    title: "Командный спайк",
+    desc: "Синхронная атака в исполнении двух игроков — результат тренировок и командной работы в реальном времени.",
+  },
+  {
+    img: "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/82fe1c56-6e8c-454a-ac92-49cbbca9724f.jpg",
+    tag: "Экипировка",
+    title: "Система снаряжения",
+    desc: "Выбирай форму, кроссовки и аксессуары — каждый предмет влияет на характеристики и стиль твоего игрока.",
+  },
 ];
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/0047dde1-3e5b-4e39-bcbd-4b74807524f7/files/ed053305-4df3-455a-941d-be8a49b8f5b5.jpg";
@@ -67,6 +79,14 @@ function AnimSection({ children, className = "" }: { children: React.ReactNode; 
     >
       {children}
     </div>
+  );
+}
+
+function TikTokIcon({ size = 24, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" className={className}>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.16 8.16 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.12z" />
+    </svg>
   );
 }
 
@@ -170,7 +190,7 @@ export default function Index() {
             <div className="flex items-center gap-3">
               {allSocials.map((s) => (
                 <a key={s.label} href={s.href} title={s.label} className="text-white/40 hover:text-blue-400 transition-colors duration-200">
-                  <Icon name={s.icon} size={16} fallback="Globe" />
+                  {s.label === "TikTok" ? <TikTokIcon size={16} className="text-current" /> : <Icon name={s.icon} size={16} fallback="Globe" />}
                 </a>
               ))}
             </div>
@@ -193,7 +213,7 @@ export default function Index() {
             <div className="flex items-center gap-4 pt-2">
               {allSocials.map((s) => (
                 <a key={s.label} href={s.href} className="text-white/40 hover:text-blue-400 transition-colors">
-                  <Icon name={s.icon} size={18} fallback="Globe" />
+                  {s.label === "TikTok" ? <TikTokIcon size={18} className="text-current" /> : <Icon name={s.icon} size={18} fallback="Globe" />}
                 </a>
               ))}
             </div>
@@ -410,39 +430,21 @@ export default function Index() {
 
                 {/* Bottom info */}
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="flex items-end justify-between gap-6">
-                    <div className="flex-1">
-                      <h3
-                        key={`title-${slide}`}
-                        className="font-display font-bold text-[clamp(1.5rem,4vw,3rem)] text-white uppercase leading-tight mb-2"
-                        style={{ animation: "fade-up 0.4s ease-out forwards" }}
-                      >
-                        {SLIDES[slide].title}
-                      </h3>
-                      <p
-                        key={`desc-${slide}`}
-                        className="font-body text-white/60 text-base leading-relaxed max-w-lg"
-                        style={{ animation: "fade-up 0.5s ease-out forwards" }}
-                      >
-                        {SLIDES[slide].desc}
-                      </p>
-                    </div>
-
-                    {/* Nav arrows */}
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <button
-                        onClick={prev}
-                        className="w-12 h-12 glass rounded-full flex items-center justify-center hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 group"
-                      >
-                        <Icon name="ChevronLeft" size={20} className="text-white/70 group-hover:text-white" />
-                      </button>
-                      <button
-                        onClick={next}
-                        className="w-12 h-12 btn-primary-vh rounded-full flex items-center justify-center transition-all duration-200 group"
-                      >
-                        <Icon name="ChevronRight" size={20} className="text-white" />
-                      </button>
-                    </div>
+                  <div className="flex-1">
+                    <h3
+                      key={`title-${slide}`}
+                      className="font-display font-bold text-[clamp(1.5rem,4vw,3rem)] text-white uppercase leading-tight mb-2"
+                      style={{ animation: "fade-up 0.4s ease-out forwards" }}
+                    >
+                      {SLIDES[slide].title}
+                    </h3>
+                    <p
+                      key={`desc-${slide}`}
+                      className="font-body text-white/60 text-base leading-relaxed max-w-lg"
+                      style={{ animation: "fade-up 0.5s ease-out forwards" }}
+                    >
+                      {SLIDES[slide].desc}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -497,11 +499,10 @@ export default function Index() {
 
           <AnimSection>
             {/* Team stats */}
-            <div className="grid grid-cols-3 gap-3 mb-10">
+            <div className="grid grid-cols-2 gap-3 mb-10">
               {[
                 { val: "2023", label: "Основана" },
                 { val: "15", label: "В команде" },
-                { val: "v0.8", label: "Версия беты" },
               ].map((s) => (
                 <div key={s.label} className="glass rounded-xl p-4 text-center">
                   <div className="font-display font-bold text-2xl text-white">{s.val}</div>
@@ -512,11 +513,11 @@ export default function Index() {
 
             {/* Carousel */}
             <div className="relative">
-              <div className="flex flex-col gap-10">
-                {/* Big photo — full width */}
-                <div className="relative w-full">
+              <div className="grid lg:grid-cols-[360px_1fr] gap-10 items-stretch">
+                {/* Portrait photo */}
+                <div className="relative">
                   <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-3xl blur-2xl" />
-                  <div className="relative rounded-3xl overflow-hidden border-glow w-full" style={{ height: 'clamp(300px, 40vw, 500px)' }}>
+                  <div className="relative rounded-3xl overflow-hidden border-glow h-full min-h-[500px]">
                     {TEAM.map((member, i) => (
                       <div
                         key={i}
@@ -585,15 +586,15 @@ export default function Index() {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={teamPrev}
-                      className="w-12 h-12 glass rounded-full flex items-center justify-center hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 group"
+                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#258cff] transition-all duration-300 group shadow-lg"
                     >
-                      <Icon name="ChevronLeft" size={20} className="text-white/70 group-hover:text-white" />
+                      <Icon name="ChevronLeft" size={20} className="text-[#0E106E] group-hover:text-white transition-colors duration-300" />
                     </button>
                     <button
                       onClick={teamNext}
-                      className="w-12 h-12 btn-primary-vh rounded-full flex items-center justify-center transition-all duration-200"
+                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#258cff] transition-all duration-300 group shadow-lg"
                     >
-                      <Icon name="ChevronRight" size={20} className="text-white" />
+                      <Icon name="ChevronRight" size={20} className="text-[#0E106E] group-hover:text-white transition-colors duration-300" />
                     </button>
                     <span className="font-body text-white/40 text-sm ml-2">
                       {teamSlide + 1} / {TEAM.length}
@@ -747,7 +748,7 @@ export default function Index() {
                   className="group glass rounded-2xl p-6 flex flex-col items-center justify-center gap-4 hover:border-white/20 hover:scale-105 transition-all duration-300 aspect-square w-full max-w-[220px]"
                 >
                   <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon name={s.icon} size={40} className="text-white" fallback="Globe" />
+                    {s.label === "TikTok" ? <TikTokIcon size={40} className="text-white" /> : <Icon name={s.icon} size={40} className="text-white" fallback="Globe" />}
                   </div>
                   <div className="text-center">
                     <div className="font-display font-bold text-white text-base">{s.label}</div>
